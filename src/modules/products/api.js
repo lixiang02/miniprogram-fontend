@@ -47,6 +47,14 @@ export async function getTypes() {
     })
 }
 
+export async function getImages(params) {
+    return await fetch({
+        url: '/images/list/all',
+        method: 'GET',
+        params
+    })
+}
+
 // export async function fetchUpload(params) {
 //     return await fetch({
 //         url: '/files/upload',

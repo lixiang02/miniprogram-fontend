@@ -7,9 +7,15 @@ const colors = [
   'magenta', 'red', 'volcano', 'gold', 'orange', 'green', 'lime', 
   'blue', 'cyan', 'purple', 'geekblue'
 ]
+const pagination = {
+  pageSize: 7, 
+  size:"small", 
+  total: 7
+}
 export default class Container extends React.Component {
     state = {
-      data: []
+      data: [],
+      pagination
     }
     componentDidMount() {
       const self = this
@@ -20,7 +26,15 @@ export default class Container extends React.Component {
             key: item._id
           })
         })
-        self.setState({ data })
+        self.setState({ 
+          data,
+          pagination: Object.assign({}, pagination, {
+            total: result.pager && result.pager.Total || data.length,
+            Offset: result.pager.Offset || 0,
+            size: pagination.size,
+            Limit: result.pager.Limit || pagination.pageSize
+          })
+        })
         resolve()
       })
     }
@@ -41,9 +55,15 @@ export default class Container extends React.Component {
       return async () => {
         console.log('---remove--',id)
         // 删除单个Item
-        await api.deleteItem(id)
-        message.info('已删除')
-        this.refresh()
+        const result = await api.deleteItem(id)
+        if (result.code === 0) {
+           message.info('已删除')
+           this.refresh()
+        } else {
+          if (!result.success) {
+            message.error('删除图片出错，产品中正在使用的图片不允许删除')
+          }
+        }
       }
     }
     render() {
@@ -115,7 +135,7 @@ export default class Container extends React.Component {
               增 加
           </Button>
         </div>
-        <Table columns={columns} dataSource={this.state.data} />
+        <Table columns={columns} dataSource={this.state.data} pagination={this.state.pagination} />
       </div>
     }
 }

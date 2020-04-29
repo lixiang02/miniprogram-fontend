@@ -7,9 +7,15 @@ const colors = [
   'magenta', 'red', 'volcano', 'gold', 'orange', 'green', 'lime', 
   'blue', 'cyan', 'purple', 'geekblue'
 ]
+const pagination = {
+  pageSize: 7, 
+  size:"small", 
+  total: 7
+}
 export default class Container extends React.Component {
     state = {
-      data: []
+      data: [],
+      pagination
     }
     componentDidMount() {
       const self = this
@@ -29,7 +35,15 @@ export default class Container extends React.Component {
 
         console.log('---result--',  data)
 
-        self.setState({ data })
+        self.setState({ 
+          data,
+          pagination: Object.assign({}, pagination, {
+            total: result.pager && result.pager.Total || data.length,
+            Offset: result.pager.Offset || 0,
+            size: pagination.size,
+            Limit: result.pager.Limit || pagination.pageSize
+          })
+        })
         resolve()
       })
     }
@@ -131,7 +145,7 @@ export default class Container extends React.Component {
               增 加
           </Button>
         </div>
-        <Table columns={columns} dataSource={this.state.data} />
+        <Table columns={columns} dataSource={this.state.data} pagination={this.state.pagination} />
       </div>
     }
 }
