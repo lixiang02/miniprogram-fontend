@@ -1,10 +1,9 @@
 const axios = require('axios');
 
-const BaseUrl = 'http://localhost'
-const port = '3000'
+const BaseUrl = 'http://ldx520.top'
 const defaultOptions = {
     method: 'get',
-    url: `${BaseUrl}:${port}`
+    url: BaseUrl
 }
 
 module.exports = async function fetchLocal(options) {
