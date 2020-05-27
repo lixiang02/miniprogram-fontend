@@ -206,7 +206,7 @@ export default class Container extends React.Component {
                         showUploadList={false}
                         data={{ type }}
                         // action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-                        action="http://localhost:3000/images"
+                        action="http://ldx520.top/images"
                         beforeUpload={this.beforeUpload}
                         onChange={this.handleChange}
                       >
