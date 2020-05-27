@@ -46,7 +46,7 @@ export default class Container extends React.Component {
             let result = await api.getItem(id)
             console.log('---detail--',  result)
             if (!result.url) {
-              result.url = result.images[0] && result.images[0].url || ''
+              result.url = result.images && result.images[0] && result.images[0].url ? result.images[0].url : ''
             }
             state = { 
               data: result, 

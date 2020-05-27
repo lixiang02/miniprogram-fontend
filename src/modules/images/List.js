@@ -29,10 +29,10 @@ export default class Container extends React.Component {
         self.setState({ 
           data,
           pagination: Object.assign({}, pagination, {
-            total: result.pager && result.pager.Total || data.length,
-            Offset: result.pager.Offset || 0,
+            total: result.pager ? result.pager.Total : data.length,
+            Offset: result.pager && result.pager.Offset ? result.pager.Offset : 0,
             size: pagination.size,
-            Limit: result.pager.Limit || pagination.pageSize
+            Limit: result.pager && result.pager.Limit ? result.pager.Limit : pagination.pageSize
           })
         })
         resolve()

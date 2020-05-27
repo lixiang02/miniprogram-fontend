@@ -2,6 +2,7 @@ import React from 'react';
 import { Button, Form, Row, Col, Select, Tag, Upload, message } from 'antd';
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import * as api from './api'
+const { serverBaseUrl } = require('../../config/local.json')
 
 const { Option } = Select;
 const layout = {
@@ -206,7 +207,7 @@ export default class Container extends React.Component {
                         showUploadList={false}
                         data={{ type }}
                         // action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-                        action="http://ldx520.top/images"
+                        action={`${serverBaseUrl}/images`}
                         beforeUpload={this.beforeUpload}
                         onChange={this.handleChange}
                       >
